@@ -1,21 +1,24 @@
 import Image from "next/image";
+import { ACTS, type ActId } from "./acts";
 
-export function ProductScene({ variant }: { variant: "dark" | "pink" }) {
-  const pink = variant === "pink";
+export function ProductScene({ variant, decorative = false }: { variant: ActId; decorative?: boolean }) {
+  const act = ACTS.find((item) => item.id === variant)!;
   return (
-    <div className={`product product-${variant}`}>
-      {/* As bebidas são placeholders gerados, sem equivalência validada no cardápio. */}
+    <div className={`product product-${variant}`} data-product={variant} aria-hidden={decorative || undefined}>
+      <div className="product-camera"><div className="product-canvas">
+      {/* Canvas 2:3: bebida e marca compartilham a geometria sem letterboxing. Produtos conceituais. */}
       <Image
         className="drink-image"
-        src={`/images/concept/${pink ? "berry-frappe" : "iced-latte"}-placeholder.webp`}
-        alt={pink ? "Bebida rosa com cobertura, renderização conceitual não oficial" : "Bebida de café gelado, renderização conceitual não oficial"}
+        src={`/images/concept/${act.image}.webp`}
+        alt={decorative ? "" : act.alt}
         width={1000}
         height={1500}
-        sizes="(max-width: 600px) 86vw, (max-width: 1000px) 65vw, 48vw"
-        preload={!pink}
-        loading={pink ? "eager" : undefined}
+        sizes="(max-width: 700px) 85vw, (max-width: 1000px) 60vw, 48vw"
+        fetchPriority={decorative ? variant === "dark" ? "high" : "low" : undefined}
+        loading={decorative ? "eager" : "lazy"}
       />
       <Image className="cup-brand" src="/brand/gocoffee-simbolo-preto.svg" alt="" width={130} height={130} aria-hidden="true" />
+      </div></div>
     </div>
   );
 }

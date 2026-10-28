@@ -10,3 +10,5 @@ artifacts/qa/
 .browser-session/
 .playwright-mcp/
 .vercel/
+test-results/
+playwright-report/
