@@ -1,0 +1,12 @@
+.git
+.next
+node_modules
+artifacts
+.playwright-mcp
+.impeccable
+.browser-session
+source-raster
+previews
+references
+concept-assets
+PREVIEW-VETORIZACAO.png
